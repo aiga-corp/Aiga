@@ -1,5 +1,5 @@
 'use server'
-import { TopNavigationBar } from "./components/home/top-navigation-bar";
+import HomeLayout from "./components/home/layout";
 import { supabase } from "./components/utils/supabase/supabase";
 
 
@@ -8,13 +8,14 @@ export default async function Page() {
   const res = await supabase.auth.getSession();
   const data = res.data;
 
-  console.log(data);
+  if(!data.session)
+  {
+    console.log("Unauthenticated")
+  }
+
 
   return (
-    <div className="h-[100vh] w-full bg-background">
-      <TopNavigationBar />
-      
-    </div>
+    <HomeLayout session={data.session} />
   )
 
 }

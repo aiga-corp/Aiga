@@ -16,14 +16,17 @@ export default async function NotFound() {
         <div
           className='w-full flex flex-row justify-center'
         >
+
           <div className='flex flex-col'>
-            <Image src={"/illustrations/404.svg"} className='w-full h-full' />
+            <img src={"/illustrations/404.svg"} className='w-full h-full' />
             <p
               className='font-semibold font-monospace text-md w-full flex flex-row justify-center'
             >
               404  - "this page does not exist."
             </p>
           </div>
+
+          
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
-import { API_URL } from "@/app/configs/api";
-import * as nsfwjs from "nsfwjs";
+Import * as nsfwjs from "nsfwjs";
 
 
 

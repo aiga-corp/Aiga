@@ -1,6 +1,5 @@
 'use client'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 
 
@@ -11,7 +10,7 @@ export const NavigationTabs = ({selected, setSelected}) => {
   return (
     <ToggleGroup
       type="single"
-      className="border-[0.5px] p-2 flex flex-row justify-between rounded-lg w-fit h-fit"
+      className="border-[0px] p-0 flex flex-row justify-between rounded-lg w-fit h-fit"
       onValueChange={setSelected}
       value={selected}
     >

@@ -7,7 +7,7 @@ export const Body = ({selected, setSelected}) => {
 
 
   return (
-    <div className="w-full h-full bg-red-200">
+    <div className="w-full h-full bg-background">
     </div>
   )
 }

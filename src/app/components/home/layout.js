@@ -1,17 +1,16 @@
 'use client'
+import { supabase } from "../utils/supabase/supabase-client";
 import { Body } from "./body";
 import { TopNavigationBar } from "./top-navigation-bar"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
 
-export default function HomeLayout({session}) {
+export default async function HomeLayout() {
 
   const [selected, setSelected] = useState("models");
 
-
-  console.log("session: ", session);
 
   const handleSelect = (value) => {
     if(value)
@@ -20,11 +19,16 @@ export default function HomeLayout({session}) {
     }
   }
 
+
+  const response = await supabase.auth.getSession();
+
   return (
-     <div className="h-[100vh] w-full bg-background">
-      <TopNavigationBar setSelected={handleSelect} selected={selected} />
+     <div className="h-[100vh] overflow-hidden w-full bg-background">
+      <TopNavigationBar setSelected={handleSelect} selected={selected} session={response.data.session} />
       
       <Body selected={selected} setSelected={setSelected} />
+
+
     </div>
   )
 }

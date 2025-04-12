@@ -1,6 +1,8 @@
 "use client"
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import dynamic from 'next/dynamic'
+
 
 
 const DynamicProviders = dynamic(
@@ -27,9 +29,15 @@ export default function RootLayout({ children }) {
   </head>
 
         <body>
-            <DynamicProviders>
+
+          <main>
+           <DynamicProviders>
               {children}
             </DynamicProviders>
+          </main>
+
+          <Toaster />
+
         </body>
 
       </html>

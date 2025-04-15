@@ -2,7 +2,7 @@
 import { supabase } from "../utils/supabase/supabase-client";
 import { Body } from "./body";
 import { TopNavigationBar } from "./top-navigation-bar"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 
@@ -26,8 +26,8 @@ export default async function HomeLayout() {
      <div className="h-[100vh] overflow-hidden w-full bg-background">
       <TopNavigationBar setSelected={handleSelect} selected={selected} session={response.data.session} />
       
-      <Body selected={selected} setSelected={setSelected} />
 
+      <Body selected={selected} setSelected={setSelected} />
 
     </div>
   )

@@ -1,4 +1,5 @@
 'use client'
+import { ModeToggle } from "../theme-toggle"
 import { NavigationTabs } from "./NavigationTabs"
 import { AuthenticationDrawer } from "../authentication/auth-drawer"
 import { useState } from "react";
@@ -6,7 +7,6 @@ import { useAccount } from "@/app/hooks/use-account";
 import { CircleLoader } from "react-spinners";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { ModeToggle } from "../theme-toggle";
 
 
 

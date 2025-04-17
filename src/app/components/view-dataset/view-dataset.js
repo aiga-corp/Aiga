@@ -4,32 +4,30 @@ import { Category } from "../categoryInput/category-input"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { LoadingIndicator } from "../home/top-navigation-bar";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import { BrainCircuit, Download, Pen } from "lucide-react";
+import { Download, Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
-import { DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, Drawer } from "@/components/ui/drawer";
+import { DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger, Drawer } from "@/components/ui/drawer";
 import { useAccount } from "@/app/hooks/use-account";
-import { UpdateBody } from "../model/body";
-import Link from "next/link";
-import { Github } from "@geist-ui/icons";
+import { UpdateBody } from "../dataset/body";
 
 
 
 
-export const ViewModel = ({modelId, session}) => {
+export const ViewDataset = ({datasetId, session}) => {
 
   const account = useAccount(session ? session.user.id : null);
 
 
   const [data, setData] = useState(null);
 
-  const fetchModel = async () => {
+  const fetchDataset = async () => {
     const response = await supabase
-      .from("Model")
+      .from("Dataset")
       .select("*, author(*)")
-      .eq("id", modelId)
+      .eq("id", datasetId)
       .maybeSingle();
 
     if(response.data)
@@ -50,7 +48,7 @@ export const ViewModel = ({modelId, session}) => {
 
   useEffect(()=> {
     if(!data)
-      fetchModel();
+      fetchDataset();
   }, [!data])
 
 
@@ -71,8 +69,8 @@ export const ViewModel = ({modelId, session}) => {
   const handleDownload = async () => {
     const response = supabase 
       .storage
-      .from("models")
-      .getPublicUrl(data.model);
+      .from("datasets")
+      .getPublicUrl(data.dataset);
 
 
     if(response.data && response.data.publicUrl)
@@ -80,7 +78,7 @@ export const ViewModel = ({modelId, session}) => {
 
 
     await supabase
-      .from("Model")
+      .from("Dataset")
       .update({
         downloads: data.downloads+1
       })
@@ -135,16 +133,15 @@ export const ViewModel = ({modelId, session}) => {
                     <DrawerContent className="h-full">
                       <DrawerHeader>
                         <DrawerTitle>
-                          Edit Model
+                          Edit Dataset
                         </DrawerTitle>
                         <DrawerDescription>
-                          Update your model.
+                          Update your dataset.
                         </DrawerDescription>
                       </DrawerHeader>
 
                       <div className="p-4 pb-0 w-full h-full">
-                          <UpdateBody model={data} account={account} />
-
+                          <UpdateBody dataset={data} account={account} />
                       </div>
                     </DrawerContent>
 
@@ -161,19 +158,6 @@ export const ViewModel = ({modelId, session}) => {
 
         </CardHeader>
 
-        {
-          data.link
-          ?
-            <div className="w-full flex flex-row gap-2">
-              <Github />
-              <Link target="_blank" href={data.link} className="text-blue-500">
-                Github Repo
-              </Link>
-            </div>
-          :
-            null
-        }
-
 
         <CardContent
           className="w-full h-full py-5 flex flex-row justify-center"
@@ -186,9 +170,8 @@ export const ViewModel = ({modelId, session}) => {
 
         <CardFooter className="w-full flex flex-wrap py-2 h-fit gap-5 pb-10">
           {data.categories.map((category)=> {
-            let c = JSON.parse(category);
 
-            return <Category text={c.tag} />
+            return <Category text={category.tag} />
           })}
         </CardFooter>
       </Card>

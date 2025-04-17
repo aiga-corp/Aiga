@@ -1,5 +1,6 @@
-'use server'
+'use client'
 import Body from "@/app/components/model/body";
+import { supabase } from "@/app/components/utils/supabase/supabase-client";
 
 
 
@@ -7,8 +8,10 @@ import Body from "@/app/components/model/body";
 export default async function Page() {
 
 
+  const response = await supabase.auth.getSession();
+
   return (
-    <Body />
+    <Body session={response.data && response.data.session} />
   )
 
 }

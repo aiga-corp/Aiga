@@ -23,7 +23,7 @@ export const ModelCard = ({model}) => {
 
 
   return (
-    <Card className="w-1/2 max-w-[400px] place-self-center" onClick={()=>router.push(`/view/model/${model.id}`)}>
+    <Card className="w-1/2 max-w-[400px] min-w-[300px] place-self-center" onClick={()=>router.push(`/view/model/${model.id}`)}>
       <CardHeader className="p-4 border-b-[0.5px] flex flex-row justify-between">
 
         <div className="w-full flex flex-row justify-between">
@@ -40,7 +40,7 @@ export const ModelCard = ({model}) => {
 
             <p className="text-xl font-semibold place-self-end">{size.value} {size.unit}</p>
 
-            <p className="text-xs font-semibold text-zinc-500">{hdate.relativeTime(model.created_at)}</p>
+            <p className="text-xs font-semibold text-zinc-500">{model.updated_at ? `last updated ${hdate.relativeTime(model.updated_at)}` : hdate.relativeTime(model.created_at)}</p>
           </div>
         </div>
 

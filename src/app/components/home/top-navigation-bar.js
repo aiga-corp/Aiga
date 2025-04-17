@@ -7,6 +7,8 @@ import { CircleLoader } from "react-spinners";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { ModeToggle } from "../theme-toggle";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 
 
@@ -31,7 +33,7 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
   const account = useAccount(session ? session.user.id : null);
 
  
-  if(!account)
+  if(!account && session)
   {
     return <LoadingIndicator />
   }
@@ -40,8 +42,17 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
   return (
     <div className="w-full border-b-[0.5px] flex flex-row justify-between p-1">
 
-      <div className="min-h-full flex flex-col justify-center">
-      <ModeToggle />
+      <div className="flex flex-row w-full gap-2">
+        <div className="min-h-full flex flex-col justify-center">
+          <Button variant="light" className="w-fit h-fit">
+            <img src={"logo.png"} className="rounded-md min-w-[50px] max-w-[50px]" />
+          </Button>
+        </div>
+        
+
+        <div className="min-h-full flex flex-col justify-center">
+        <ModeToggle />
+        </div>
       </div>
 
       <div className="w-full"></div>

@@ -19,6 +19,7 @@ export function useAccount(uuid) {
 
       if(!response.error && response.data.length)
         setValue(response.data[0]);
+      console.log(response)
     }
 
     if(uuid && !value)

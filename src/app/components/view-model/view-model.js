@@ -4,18 +4,24 @@ import { Category } from "../categoryInput/category-input"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { LoadingIndicator } from "../home/top-navigation-bar";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import { BrainCircuit, Download } from "lucide-react";
+import { BrainCircuit, Download, Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import { DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, Drawer } from "@/components/ui/drawer";
-import { ModelInference } from "../modelInference/modelInference";
+import { useAccount } from "@/app/hooks/use-account";
+import { UpdateBody } from "../model/body";
+import Link from "next/link";
+import { Github } from "@geist-ui/icons";
 
 
-//https://onnxruntime.ai/docs/tutorials/web/classify-images-nextjs-github-template.html
 
-export const ViewModel = ({modelId}) => {
+
+export const ViewModel = ({modelId, session}) => {
+
+  const account = useAccount(session ? session.user.id : null);
+
 
   const [data, setData] = useState(null);
 
@@ -75,7 +81,6 @@ export const ViewModel = ({modelId}) => {
 
 
 
-
   return (
     <div
       className="w-full h-full p-10"
@@ -109,40 +114,37 @@ export const ViewModel = ({modelId}) => {
                   <Download />
                 </Button>
 
+                {
+                  data.author.username === account.username
+                  ?
+                  <Drawer>
+                    <DrawerTrigger>
+                      <Button variant="light">
+                        <Pen />
+                      </Button>
+                    </DrawerTrigger>
 
-                <Drawer>
-                   <DrawerTrigger asChild>
-                    <Button className="p-0 font-semibold" variant="light">
-                      <BrainCircuit />
-                    </Button>
-                  </DrawerTrigger>
-
-                  <DrawerContent className="h-full">
-                    <div className="mx-auto w-full max-w-sm">
+                    <DrawerContent className="h-full">
                       <DrawerHeader>
-                        <DrawerTitle>Model Inference</DrawerTitle>
-                        <DrawerDescription>run the model on your browser locally.</DrawerDescription>
+                        <DrawerTitle>
+                          Edit Model
+                        </DrawerTitle>
+                        <DrawerDescription>
+                          Update your model.
+                        </DrawerDescription>
                       </DrawerHeader>
 
+                      <div className="p-4 pb-0 w-full h-full">
+                          <UpdateBody model={data} account={account} />
 
-                      <div className="p-4 pb-0">
-                        <div className="flex items-center justify-center space-x-2 h-full w-full">
-                         
-                          {/* render input (depending on model input type) */}
-                          <ModelInference model={data} />
-
-                        </div>
                       </div>
+                    </DrawerContent>
 
+                  </Drawer>
+                  :
+                    null
+                }
 
-                      <DrawerFooter>
-                        <DrawerClose asChild>
-                          <Button variant="outline">Cancel</Button>
-                        </DrawerClose>
-                      </DrawerFooter>
-                    </div>
-                  </DrawerContent>
-                </Drawer>
               </div>
 
             </div>
@@ -150,6 +152,19 @@ export const ViewModel = ({modelId}) => {
           </div>
 
         </CardHeader>
+
+        {
+          data.link
+          ?
+            <div className="w-full flex flex-row gap-2">
+              <Github />
+              <Link target="_blank" href={data.link} className="text-blue-500">
+                Github Repo
+              </Link>
+            </div>
+          :
+            null
+        }
 
 
         <CardContent

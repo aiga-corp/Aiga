@@ -30,6 +30,7 @@ export default function Models() {
       .from("Model")
       .select("*, author(*)")
       .not("id", "in", getIds())
+      .order("downloads", {"ascending": false}) // -downloads
       .limit(5);
 
 

@@ -71,12 +71,20 @@ export const ViewModel = ({modelId, session}) => {
   const handleDownload = async () => {
     const response = supabase 
       .storage
-      .from("models/public")
+      .from("models")
       .getPublicUrl(data.model);
 
 
     if(response.data && response.data.publicUrl)
       window.open(response.data.publicUrl, "_blank");
+
+
+    await supabase
+      .from("Model")
+      .update({
+        downloads: data.downloads+1
+      })
+      .eq("id", data.id);
   }
 
 

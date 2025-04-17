@@ -39,10 +39,25 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
   }
 
 
+  const getSelectedUrl = () => {
+    switch(selected)
+    {
+      case "models":
+        return "/new/model";
+
+      case "datasets":
+        return "/new/dataset";
+
+      case "forum":
+        return "/new/discussion";
+    }
+  }
+
+
   return (
     <div className="w-full border-b-[0.5px] flex flex-row justify-between p-1">
 
-      <div className="flex flex-row w-full gap-2">
+      <div className="flex flex-row w-fit gap-2">
         <div className="min-h-full flex flex-col justify-center">
           <Button variant="light" className="w-fit h-fit">
             <img src={"logo.png"} className="rounded-md min-w-[50px] max-w-[50px]" />
@@ -55,21 +70,19 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
         </div>
       </div>
 
-      <div className="w-full"></div>
 
 
       <div className="min-h-full flex flex-col justify-center">
         <NavigationTabs setSelected={setSelected} selected={selected} />
       </div>
 
-      <div className="w-full"></div>
 
       {
         account || session
           ?
 
             <div className="min-h-full flex flex-col justify-center">
-              <Link href={"/new/model"} className="mr-10">
+              <Link href={getSelectedUrl()} className="mr-10">
                 <Plus />
               </Link>
 

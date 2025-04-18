@@ -48,14 +48,14 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
       case "datasets":
         return "/new/dataset";
 
-      case "forum":
-        return "/new/discussion";
+      case "community":
+        return "/";
     }
   }
 
 
   return (
-    <div className="w-full border-b-[0.5px] flex flex-row justify-between p-1">
+    <div className="w-full flex flex-row justify-between p-1 border-grid sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 
       <div className="flex flex-row w-fit gap-2">
         <div className="min-h-full flex flex-col justify-center">

@@ -2,7 +2,7 @@
 
 
 
-export default function Forum() {
+export default function Community() {
 
 
   return (

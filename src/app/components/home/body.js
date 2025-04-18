@@ -1,6 +1,6 @@
 'use client'
+import Community from "../tabs/community";
 import Datasets from "../tabs/datasets";
-import Forum from "../tabs/forum";
 import Models from "../tabs/models";
 
 
@@ -14,8 +14,8 @@ const renderSelectionBody = (selection) => {
       return <Datasets />;
 
 
-    case "forum":
-      return <Forum />;
+    case "community":
+      return <Community />;
   }
 }
 

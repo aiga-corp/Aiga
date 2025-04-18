@@ -3,13 +3,17 @@ import { CategoryInput } from "@/app/components/categoryInput/category-input"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "../utils/supabase/supabase-client";
 import { useAccount } from "@/app/hooks/use-account";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { LoadingIndicator } from "../home/top-navigation-bar";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DatasetInput } from "../datasetsInput/datasets-input";
+import { ParameterCard } from "../ui/parameterCard";
+import InfiniteScroll from "react-infinite-scroller";
+import { CircleLoader } from "react-spinners";
 
 
 
@@ -464,6 +468,269 @@ export function UpdateBody({ model, account }) {
 
     </div>
   )
+
+}
+
+
+
+
+export function ParametersBody({ account, model }) {
+
+  const [description, setDescription] = useState(null);
+  const [parametersFile, setParametersFile] = useState(null);
+  const [datasets, setDatasets] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+
+
+  const { toast } = useToast();
+
+
+  const uploadParameters = async (file) => {
+
+    if(!file.name.endsWith(".pt") && !file.name.endsWith(".pth"))
+    {
+      toast({
+        title: `${file.name} is not compatible.`,
+        description: "We only support pytorch Models therefore model parameters must be in a .pt or .pth file."
+      });
+
+      return;
+    }
+
+
+    const { data, error } = await supabase.storage
+      .from("models")
+      .upload(`public/${file.name}`, file, {
+        cacheControl: "3600",
+        upsert: false
+      });
+
+
+    if(error)
+    {
+      toast({
+        title: error.error,
+        description: error.message,
+      });
+    }
+
+
+    
+    return !error ? data.path : null;
+  }
+
+
+
+  const handleSubmit = async () => {
+
+    if(!account) return;
+
+    setLoading(true);
+
+
+    const parametersFilePath = await uploadParameters(parametersFile);
+
+
+    if(!parametersFilePath)
+    {
+      setLoading(false);
+      return
+    }
+
+
+    const response = await supabase
+      .from("Parameters")
+      .insert({
+        model: model.id,
+        description: description,
+        parameters: parametersFilePath,
+        size: parametersFile.size,
+        datasets: datasets,
+        author: account.id,
+      });
+
+
+    if(response.error)
+    {
+      toast({
+        title: "Failed to upload the parameters.",
+        description: "Please try again..."
+      });
+    }
+
+    else{
+      toast({
+        title: "Success!!!",
+        description: "Thank you for your contributions <3",
+      });
+    }
+
+    setLoading(false);
+  }
+
+
+  const isDisabled = () => {
+    if(!description || !datasets.length || !parametersFile )
+      return true;
+
+    return false;
+  }
+
+
+  if(loading)
+  {
+    return(
+      <div className="w-full h-[100vh] flex flex-col justify-center">
+        <LoadingIndicator />
+      </div>
+    )
+  }
+
+
+  return (
+    <div className="w-full h-[100vh] overflow-y-scroll flex flex-col p-10 gap-10">
+
+
+
+      <div className="w-full flex flex-row justify-center">
+        <div className="w-full max-w-[400px] flex flex-col gap-5">
+          <Label>Parameters Describtion (Markdown Supported)</Label>
+
+          <textarea placeholder="description... (you can paste markdown here)" className="border-[0.5px] min-h-[100px] rounded-md p-2 outline-none" onChange={(e)=>setDescription(e.target.value)} />
+        </div>
+      </div>
+
+
+
+      <div className="w-full h-[auto] flex flex-row justify-center">
+
+        <div className="w-full max-w-[400px] flex flex-col gap-5">
+        <Label>Parameters file (.pt / .pth)</Label>
+
+          <Input type="file" placeholder="Parameters file" className="w-full max-w-[400px]" onChange={(e)=>{
+            if(e.target.files && e.target.files.length)
+            {
+              setParametersFile(e.target.files[0])
+            }
+          }} />
+        </div>
+
+      </div>
+
+
+
+      <div className="w-full h-fit flex flex-row justify-center">
+
+        <div className="w-full max-w-[400px] p-2">
+        <Label>Datasets</Label>
+          {/* datasets */}
+
+          <DatasetInput datasets={datasets} setDatasets={setDatasets} />
+        </div>
+      </div>
+
+
+      <div className="w-full flex flex-row justify-center">
+        <Button onClick={()=>handleSubmit()} disabled={isDisabled()} className={"w-full max-w-[400px]"}>
+          Publish
+        </Button>
+      </div>
+
+      <div className="pb-10">
+      </div>
+
+    </div>
+  )
+
+}
+
+
+
+export function ParametersListBody({ model }) {
+
+  const [parameters, setParameters] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [end, setEnd] = useState(false);
+
+
+  const { toast } = useToast();
+
+
+  const getIds = () => {
+    let ids = [];
+
+    parameters.forEach((m)=> {
+      ids.push(m.id);
+    })
+
+    return JSON.stringify(ids).replace("[", "(").replace("]", ")");
+  }
+
+
+  const fetchModels = async () => {
+
+
+    const { data, error } = await supabase
+      .from("Parameters")
+      .select("*, author(*)")
+      .not("id", "in", getIds())
+      .order("size", {"ascending": false}) // -size
+      .limit(5);
+
+
+    if(!error)
+    {
+      if(data.length)
+        if(parameters.length)
+        {
+          setParameters(p=>[...p, ...data]);
+        }
+        else{
+          setParameters(data);
+        }
+      else
+        setEnd(true);
+    }
+    else{
+      console.log(error);
+    }
+  }
+
+
+
+  const vref = useRef();
+
+
+  return (
+    <div className="w-full h-full flex flex-col gap-10 overflow-y-scroll p-t-0" style={{paddingBottom: 150}} ref={(r)=>vref.current=r}>
+      <InfiniteScroll
+        data={parameters}
+        hasMore={!end}
+        initialLoad
+        loadMore={()=>fetchModels()}
+        loader={
+          <div
+            className="w-full flex flex-row justify-center"
+          >
+            <CircleLoader size={25} />
+          </div>
+        }
+          threshold={400}
+          useWindow={false}
+          getScrollParent={()=>vref.current}
+      />
+      {
+        parameters.length ?
+          parameters.map((param)=> {
+            return <ParameterCard key={param.id} parameter={param} />
+          })
+        :
+          null
+      }
+    </div>
+  )
+
 
 }
 

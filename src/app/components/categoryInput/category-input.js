@@ -16,7 +16,7 @@ export const Category = ({handleDelete, text}) => {
   {
     return (
       <button
-        className="p-3 border-[0.5px] rounded-full font-semibold text-sm"
+        className="p-3 border-[0.5px] rounded-xl font-semibold text-sm"
       >
         {text}
       </button>

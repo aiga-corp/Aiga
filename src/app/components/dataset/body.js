@@ -204,7 +204,6 @@ export default function Body({ session }) {
 
 export function UpdateBody({ dataset, session }) {
 
-  const [name, setName] = useState(dataset.name);
   const [description, setDescription] = useState(dataset.description);
   const [datasetFile, setdatasetFile] = useState(null);
   const [categories, setCategories] = useState(dataset.categories);
@@ -266,7 +265,6 @@ export function UpdateBody({ dataset, session }) {
 
 
     let obj = {
-      name: name,
       categories: categories,
       description: description,
     };
@@ -317,20 +315,6 @@ export function UpdateBody({ dataset, session }) {
 
   return (
     <div className="w-full h-[100vh] overflow-y-scroll flex flex-col p-10 gap-10">
-
-      <div className="w-full flex flex-row justify-center">
-
-        <div className="w-full max-w-[400px] flex flex-col gap-5">
-          <Label>dataset Name</Label>
-
-          <Input 
-            value={name}
-            placeholder="name"
-            className="w-full max-w-[400px] p-2"
-            onChange={(e)=>setName(e.target.value)}
-          />
-        </div>
-      </div>
 
 
 

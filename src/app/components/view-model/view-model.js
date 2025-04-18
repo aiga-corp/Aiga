@@ -4,14 +4,14 @@ import { Category } from "../categoryInput/category-input"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { LoadingIndicator } from "../home/top-navigation-bar";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import { BrainCircuit, Download, Pen } from "lucide-react";
+import { Download, Pen, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
-import { DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, Drawer } from "@/components/ui/drawer";
+import { DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger, Drawer } from "@/components/ui/drawer";
 import { useAccount } from "@/app/hooks/use-account";
-import { UpdateBody } from "../model/body";
+import { ParametersBody, ParametersListBody, UpdateBody } from "../model/body";
 import Link from "next/link";
 import { Github } from "@geist-ui/icons";
 
@@ -25,6 +25,23 @@ export const ViewModel = ({modelId, session}) => {
 
   const [data, setData] = useState(null);
 
+  const [parametersCount, setParametersCount] = useState(0);
+
+
+  const fetchParametersCount = async () => {
+    const response = await supabase
+      .from("Parameters")
+      .select("*", {count: "exact", head: true})
+      .eq("model", modelId);
+
+
+    if(response.count)
+    {
+      setParametersCount(response.count);
+    }
+  }
+
+
   const fetchModel = async () => {
     const response = await supabase
       .from("Model")
@@ -37,6 +54,8 @@ export const ViewModel = ({modelId, session}) => {
       window.document.title = response.data.name;
 
       setData(response.data);
+
+      fetchParametersCount();
     }
     else{
       notFound();
@@ -161,18 +180,70 @@ export const ViewModel = ({modelId, session}) => {
 
         </CardHeader>
 
-        {
-          data.link
-          ?
-            <div className="w-full flex flex-row gap-2">
-              <Github />
-              <Link target="_blank" href={data.link} className="text-blue-500">
-                Github Repo
-              </Link>
+      <div className="w-full flex flex-row gap-2">
+          {
+            data.link
+            ?
+              <div className="w-full flex flex-row gap-2">
+                <Github />
+                <Link target="_blank" href={data.link} className="text-blue-500 font-semibold">
+                  Github Link
+                </Link>
+              </div>
+            :
+              null
+          }
+
+          <div className="flex flex-col justify-center">
+
+            <div className="flex flex-row">
+               <Drawer>
+                <DrawerTrigger>
+                  <Button className="w-full" variant="light">
+                    <Users />
+                    Contribute
+                  </Button>
+                </DrawerTrigger>
+
+                <DrawerContent className="h-full">
+                  <DrawerHeader>
+                    <DrawerTitle>
+                      Contribute to the model
+                    </DrawerTitle>
+                    <DrawerDescription>
+                      Train, save and upload the parameters file for this model here...
+                    </DrawerDescription>
+                  </DrawerHeader>
+
+                  <div className="p-4 pb-0 w-full h-full">
+                    <ParametersBody model={data} account={account} />
+
+                  </div>
+                </DrawerContent>
+              </Drawer>
             </div>
-          :
-            null
-        }
+
+
+            <div className="flex flex-row">
+               <Drawer>
+                <DrawerTrigger>
+                  <Button className="w-full" variant="light">
+                    Parameters ({parametersCount})
+                  </Button>
+                </DrawerTrigger>
+
+                <DrawerContent className="h-full p-0">
+                  <div className="pb-0 w-full h-full p-0">
+                    <ParametersListBody model={data} />
+                  </div>
+                </DrawerContent>
+              </Drawer>
+            </div>
+
+
+          </div>
+
+        </div>
 
 
         <CardContent

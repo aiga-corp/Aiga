@@ -9,6 +9,7 @@ import { Plus } from "lucide-react";
 import { ModeToggle } from "../theme-toggle";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 
 
@@ -54,6 +55,9 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
   }
 
 
+  const router = useRouter();
+
+
   return (
     <div className="w-full flex flex-row justify-between p-1 border-grid sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 
@@ -82,9 +86,9 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
           ?
 
             <div className="min-h-full flex flex-col justify-center">
-              <Link href={getSelectedUrl()} className="mr-10">
+              <button onClick={()=>router.push(getSelectedUrl())} className="mr-10 bg-background border-0">
                 <Plus />
-              </Link>
+              </button>
 
             </div>
 

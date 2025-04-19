@@ -105,9 +105,9 @@ export default function Datasets() {
           loadMore={()=>fetchDatasets()}
           loader={
             <div
-              className="w-full flex flex-row justify-center"
+              className="w-full flex flex-row justify-center py-5"
             >
-              <CircleLoader size={25} className="text-red-500" />
+              <CircleLoader className="rounded-xl p-3 bg-neutral-50" size={25} />
             </div>
           }
             threshold={400}

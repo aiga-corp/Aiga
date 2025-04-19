@@ -56,9 +56,6 @@ export default function Models() {
       else
         setEnd(true);
     }
-    else{
-      console.log(error);
-    }
   }
 
 
@@ -71,7 +68,7 @@ export default function Models() {
 
     const response = await supabase
       .from("Model")
-      .select("*")
+      .select("*, author(*)")
       .textSearch("name", query)
       .textSearch("description", query)
       .limit(20);
@@ -98,18 +95,44 @@ export default function Models() {
 
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full flex flex-row">
+        <div className="w-full h-full flex flex-col gap-10 overflow-y-scroll" style={{paddingBottom: 200}} ref={(r)=>vref.current=r}>
+          <InfiniteScroll
+            data={models}
+            hasMore={!end}
+            initialLoad
+            loadMore={()=>fetchModels()}
+            loader={
+              <div
+                className="w-full flex flex-row justify-center"
+              >
+                <CircleLoader size={25} />
+              </div>
+            }
+              threshold={400}
+              useWindow={false}
+              getScrollParent={()=>vref.current}
+          />
+          {
+            models.length ?
+              models.map((model)=> {
+                return <ModelCard key={model.id} model={model} />
+              })
+            :
+              null
+          }
+        </div>
 
-      <div className="w-full p-2 fixed flex flex-row justify-end pr-10">
+      <div className="w-fit p-0">
         <Dialog> 
           <DialogTrigger asChild>
-            <Button variant="outline">
+            <Button variant="light" className="border-l border-b border-t-[0px] rounded-none rounded-es-xl">
               <Search />
             </Button>
           </DialogTrigger>
 
 
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="md:max-w-[400px] rounded-lg">
             <DialogHeader>
               <DialogTitle>
                 Search Models
@@ -134,32 +157,7 @@ export default function Models() {
         </Dialog>
       </div>
 
-        <div className="w-full h-full flex flex-col gap-10 overflow-y-scroll" ref={(r)=>vref.current=r}>
-          <InfiniteScroll
-            data={models}
-            hasMore={!end}
-            initialLoad
-            loadMore={()=>fetchModels()}
-            loader={
-              <div
-                className="w-full flex flex-row justify-center"
-              >
-                <CircleLoader size={25} className="text-red-500" />
-              </div>
-            }
-              threshold={400}
-              useWindow={false}
-              getScrollParent={()=>vref.current}
-          />
-          {
-            models.length ?
-              models.map((model)=> {
-                return <ModelCard key={model.id} model={model} />
-              })
-            :
-              null
-          }
-        </div>
+
     </div>
   )
 

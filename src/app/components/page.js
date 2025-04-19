@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { CategoryInput } from "@/app/components/categoryInput/category-input"
 import { Input } from "@/components/ui/input"

@@ -24,8 +24,10 @@ export default function RootLayout({ children }) {
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
   <link rel="manifest" href="/site.webmanifest"/>
 
-      <meta name="description" content="Voidback - Create communities and contribute to machine learning models all from your browser." />
-      <meta name="keywords" content="Voidback, Rooms, In Browser AI, In Browser Machine Learning, Models, ML, AI, Communities, Discussions " />
+        <title itemScope itemProp="https://schema.org/title">Aiga</title>
+
+      <meta name="description" content="AIGA: Leading Africa and the Middle East in the global AI arena." />
+      <meta name="keywords" content="Middle East, Africa, AI, Africa AI, Middle East AI, Machine Learning, Open Source, Open Source, Models, ML, AI, Communities, Discussions, LLM" />
 
   </head>
 

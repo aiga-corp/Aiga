@@ -23,17 +23,17 @@ export const ModelCard = ({model}) => {
 
 
   return (
-    <Card className="w-1/2 max-w-[400px] min-w-[300px] place-self-center" onClick={()=>router.push(`/view/model/${model.id}`)}>
+    <Card itemScope itemProp="https://schema.org/Product" className="w-1/2 max-w-[400px] min-w-[300px] place-self-center" onClick={()=>router.push(`/view/model/${model.id}`)}>
       <CardHeader className="p-4 border-b-[0.5px] flex flex-row justify-between">
 
         <div className="w-full flex flex-row justify-between">
           <div className="flex flex-col gap-1">
 
-            <p className="font-semibold text-xl">
+            <p itemScope itemProp="https://schema.org/name" className="font-semibold text-xl">
               {model.name}
             </p>
 
-            <p className="text-xs font-semibold text-zinc-500">By {model.author.displayName}</p>
+            <p  itemScope itemProp="https://schema.org/Person" className="text-xs font-semibold text-zinc-500">By {model.author.displayName}</p>
           </div>
 
           <div className="flex flex-col gap-1">

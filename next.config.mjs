@@ -13,7 +13,6 @@ const nextConfig = {
 
    webpack: (config) => {
 
-
         config.resolve.alias = {
             ...config.resolve.alias,
             "sharp$": false,

@@ -1,5 +1,6 @@
 'use client'
 import { useTheme } from "next-themes";
+import HomeLayout from "./components/home/layout";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
@@ -92,12 +93,9 @@ export default function Page() {
  
       <div className="h-[75vh] w-full flex flex-col">
 
-        <div className="h-full w-full animate-jump-in animate-once flex flex-col justify-center min-h-[50vh]">
+      <div className="h-full w-full animate-jump-in animate-once flex flex-col justify-center min-h-[50vh]"> 
 
-          <img 
-            className="object-cover absolute -z-10 w-full h-full"
-            src="images/wave-1.png"
-          />
+          <img className="object-cover absolute -z-10 w-full h-full" src="images/wave-1.png" />
 
           <div className="h-1/2 min-h-[40vh] max-w-[800px] shadow-2xl border rounded-3xl p-5 w-full bg-background self-center flex flex-col justify-between">
             <p className="text-4xl">

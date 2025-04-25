@@ -88,8 +88,8 @@ export const ParameterCard = ({parameter}) => {
 
       <CardFooter className="w-full flex flex-wrap py-2 h-fit gap-5">
         <Label>Datasets</Label>
-        {parameter.datasets.map((dataset)=> {
-          return <Dataset text={dataset} />
+        {parameter.datasets.map((dataset, i)=> {
+          return <Dataset key={i} text={dataset} />
         })}
       </CardFooter>
     </Card>

@@ -711,6 +711,7 @@ export function ParametersListBody({ model }) {
         loadMore={()=>fetchModels()}
         loader={
           <div
+            key="loader"
             className="w-full flex flex-row justify-center"
           >
             <CircleLoader size={25} />

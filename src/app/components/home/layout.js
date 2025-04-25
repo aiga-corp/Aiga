@@ -2,14 +2,15 @@
 import { supabase } from "../utils/supabase/supabase-client";
 import { Body } from "./body";
 import { TopNavigationBar } from "./top-navigation-bar"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
 
-export default async function HomeLayout() {
+export default function HomeLayout() {
 
   const [selected, setSelected] = useState("apps");
+  const [session, setSession] = useState(null);
 
 
   const handleSelect = (value) => {
@@ -20,11 +21,26 @@ export default async function HomeLayout() {
   }
 
 
-  const response = await supabase.auth.getSession();
+  useEffect(()=> {
+    const getSess = async () => {
+      const response = await supabase.auth.getSession();
+
+      if(response.data)
+      {
+        setSession(response.data.session);
+      }
+    }
+
+
+    getSess();
+  }, [!session])
+
+
+
 
   return (
      <div className="h-[100vh] overflow-hidden w-full bg-background">
-      <TopNavigationBar setSelected={handleSelect} selected={selected} session={response.data.session} />
+      <TopNavigationBar setSelected={handleSelect} selected={selected} session={session} />
       
 
       <Body selected={selected} setSelected={setSelected} />

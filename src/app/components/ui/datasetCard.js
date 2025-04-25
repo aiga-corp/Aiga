@@ -46,10 +46,10 @@ export const DatasetCard = ({dataset}) => {
 
 
       <CardFooter className="w-full flex flex-wrap py-2 h-fit gap-5">
-        {dataset.categories.map((category)=> {
+        {dataset.categories.map((category, i)=> {
           let c = category;
 
-          return <Category text={c.tag} />
+          return <Category key={i} text={c.tag} />
         })}
 
       </CardFooter>

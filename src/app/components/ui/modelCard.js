@@ -48,10 +48,10 @@ export const ModelCard = ({model}) => {
 
 
       <CardFooter className="w-full flex flex-wrap py-2 h-fit gap-5">
-        {model.categories.map((category)=> {
+        {model.categories.map((category,i)=> {
           let c = JSON.parse(category);
 
-          return <Category text={c.tag} />
+          return <Category key={i} text={c.tag} />
         })}
       </CardFooter>
     </Card>

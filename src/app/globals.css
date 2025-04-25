@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* tailwind css v4.x */
+
 
 span {
   font-family: "Roboto", sans-serif;

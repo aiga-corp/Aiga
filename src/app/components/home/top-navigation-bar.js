@@ -51,6 +51,10 @@ export const TopNavigationBar = ({selected, setSelected, session}) => {
 
       case "community":
         return "/";
+
+      case "apps":
+        return "/new/app";
+
     }
   }
 

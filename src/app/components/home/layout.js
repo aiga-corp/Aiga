@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default async function HomeLayout() {
 
-  const [selected, setSelected] = useState("models");
+  const [selected, setSelected] = useState("apps");
 
 
   const handleSelect = (value) => {

@@ -69,19 +69,16 @@ export default function Community() {
 
       <div className="w-full max-w-[50vw] min-w-[400px] self-center flex flex-wrap justify-center p-4 gap-5" style={{paddingBottom: 100}}>
         <p className="text-xl font-semibold">
-          About AIGA
+          OPEN-SOURCE AIGA
         </p>
 
         <p>
-          The AI Group Apparatus is a community-powered initiative designed to boost African and Middle Eastern participation in the global AI arena. Think of it as a collaborative hub where you can share your PyTorch-based AI models, allowing others to download and fine-tune them.</p>
-
-        <p> When they upload the updated parameters, they're essentially contributing to the evolution of your model.
-          </p>
+          AI Governance Africa is more than just a platform; it's a community-powered initiative designed to boost African participation in the global AI arena. Think of it as a collaborative hub where you can share your PyTorch-based AI models, allowing others to download and fine-tune them. Alternatively, you can upload your pre-trained models via the apps tab, giving users the convenience of running them directly from their browsers.
+        </p>
 
 
         <p>
-
-          We also encourage the sharing of datasets. By uploading your datasets, you incentivize the community to build innovative AI solutions. It's all about fostering collaboration and growing the AI landscape together in our regions.
+We also encourage the sharing of datasets. By uploading your datasets, you incentivize the community to build innovative AI solutions. This is all about fostering collaboration and collectively growing the AI landscape on our continent.
         </p>
 
         <p>

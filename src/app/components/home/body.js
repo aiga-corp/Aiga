@@ -2,6 +2,7 @@
 import Community from "../tabs/community";
 import Datasets from "../tabs/datasets";
 import Models from "../tabs/models";
+import Apps from "../tabs/apps";
 
 
 const renderSelectionBody = (selection) => {
@@ -16,6 +17,10 @@ const renderSelectionBody = (selection) => {
 
     case "community":
       return <Community />;
+
+
+    case "apps":
+      return <Apps />;
   }
 }
 

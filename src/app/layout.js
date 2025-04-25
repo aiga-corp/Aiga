@@ -26,8 +26,8 @@ export default function RootLayout({ children }) {
 
         <title itemScope itemProp="https://schema.org/title">Aiga</title>
 
-      <meta name="description" content="AIGA: Leading Africa and the Middle East in the global AI arena." />
-      <meta name="keywords" content="Middle East, Africa, AI, Africa AI, Middle East AI, Machine Learning, Open Source, Open Source, Models, ML, AI, Communities, Discussions, LLM" />
+      <meta name="description" content="AIGA: Leading Africa in the global AI arena." />
+      <meta name="keywords" content="Africa, AI, Africa AI, Machine Learning, Open Source, Open Source, Models, ML, AI, Communities, Discussions, LLM" />
 
   </head>
 

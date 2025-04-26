@@ -1,6 +1,6 @@
-'use client'
+'use server'
 
-import { supabase } from "@/app/components/utils/supabase/supabase-client";
+import { createClient } from "@/app/components/utils/supabase/supabase-server";
 import { ViewModel } from "@/app/components/view-model/view-model"
 
 
@@ -10,6 +10,8 @@ import { ViewModel } from "@/app/components/view-model/view-model"
 export default async function Page({ params }) {
 
   const { id } = await params
+
+  const supabase = await createClient();
 
   const response = await supabase.auth.getSession();
 

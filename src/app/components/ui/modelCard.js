@@ -1,7 +1,6 @@
+'use client'
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Category } from "../categoryInput/category-input"
-import { MarkdownHooks } from "react-markdown";
-import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 
 

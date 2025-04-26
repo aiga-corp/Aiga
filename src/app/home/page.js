@@ -1,9 +1,9 @@
-'use server'
+'use client'
 import HomeLayout from "../components/home/layout";
 
 
 
-export default async function Page() {
+export default function Page() {
 
 
   return (

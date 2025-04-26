@@ -1,5 +1,4 @@
 'use client'
-
 import Link from "next/link"
 import { FaDiscord } from "@react-icons/all-files/fa/FaDiscord";
 import { FaReddit } from "@react-icons/all-files/fa/FaReddit";

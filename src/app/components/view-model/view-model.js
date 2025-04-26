@@ -145,7 +145,7 @@ export const ViewModel = ({modelId, session}) => {
                   data.author.user === account.user
                   ?
                   <Drawer>
-                    <DrawerTrigger>
+                    <DrawerTrigger asChild>
                       <Button variant="light">
                         <Pen />
                       </Button>
@@ -198,7 +198,7 @@ export const ViewModel = ({modelId, session}) => {
 
             <div className="flex flex-row">
                <Drawer>
-                <DrawerTrigger>
+                <DrawerTrigger asChild>
                   <Button className="w-full" variant="light">
                     <Users />
                     Contribute
@@ -226,17 +226,27 @@ export const ViewModel = ({modelId, session}) => {
 
             <div className="flex flex-row">
                <Drawer>
-                <DrawerTrigger>
+
+                <DrawerTrigger asChild>
                   <Button className="w-full" variant="light">
                     Parameters ({parametersCount})
                   </Button>
                 </DrawerTrigger>
 
                 <DrawerContent className="h-full p-0">
+                  <DrawerHeader>
+                    <DrawerTitle>
+                      These are the contributed Parameters 
+                    </DrawerTitle>
+                    <DrawerDescription>
+                      Train the model, save the model's state_dict and upload the .pt / .pth
+                    </DrawerDescription>
+                  </DrawerHeader>
                   <div className="pb-0 w-full h-full p-0">
                     <ParametersListBody model={data} />
                   </div>
                 </DrawerContent>
+
               </Drawer>
             </div>
 
@@ -256,10 +266,10 @@ export const ViewModel = ({modelId, session}) => {
 
 
         <CardFooter className="w-full flex flex-wrap py-2 h-fit gap-5 pb-10">
-          {data.categories.map((category)=> {
+          {data.categories.map((category,i)=> {
             let c = JSON.parse(category);
 
-            return <Category text={c.tag} />
+            return <Category key={i} text={c.tag} />
           })}
         </CardFooter>
       </Card>

@@ -169,9 +169,9 @@ export const ViewDataset = ({datasetId, session}) => {
 
 
         <CardFooter className="w-full flex flex-wrap py-2 h-fit gap-5 pb-10">
-          {data.categories.map((category)=> {
+          {data.categories.map((category, i)=> {
 
-            return <Category text={category.tag} />
+            return <Category key={i} text={category.tag} />
           })}
         </CardFooter>
       </Card>

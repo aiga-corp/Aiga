@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 export default function HomeLayout() {
 
-  const [selected, setSelected] = useState("apps");
+  const [selected, setSelected] = useState("models");
   const [session, setSession] = useState(null);
 
 

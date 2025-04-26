@@ -15,11 +15,6 @@ export const NavigationTabs = ({selected, setSelected}) => {
       onValueChange={setSelected}
       value={selected}
     >
-      <ToggleGroupItem className={`text-sm font-semibold p-2 rounded-lg ${selected==="apps" && "bg-neutral-200 dark:bg-neutral-800"}`} aria-label="apps" value="apps">
-        <p>Apps</p>
-      </ToggleGroupItem>
-
-
 
       <ToggleGroupItem className={`text-sm font-semibold p-2 rounded-lg ${selected==="models" && "bg-neutral-200 dark:bg-neutral-800"}`} aria-label="models" value="models">
         <p>Models</p>
